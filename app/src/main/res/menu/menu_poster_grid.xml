@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 50 is just a randomly selected number less than 100 -->
+    <!-- TODO Use vector drawable for sort icon in API 21 and above -->
+    <!-- HMMM Should I have used ic_sort_black_24dp instead? -->
+    <!-- HMMM Should the sort icon be mirrored for RTL languages? -->
+    <item android:id="@+id/action_sort"
+        android:title="@string/action_sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:checkableBehavior="single"
+        android:orderInCategory="50"
+        app:showAsAction="ifRoom|withText">
+        <menu>
+            <item android:id="@+id/action_sort_by_most_popular"
+                android:title="@string/action_sort_by_most_popular" />
+            <item android:id="@+id/action_sort_by_highest_rated"
+                android:title="@string/action_sort_by_highest_rated" />
+        </menu>
+    </item>
+
+</menu>
