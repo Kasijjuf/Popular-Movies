@@ -1,7 +1,6 @@
 package com.kasijjuf.udacity.popularmovies;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,13 +52,11 @@ class ImageAdapter extends BaseAdapter {
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE); // HMMM Which ScaleType do I need?
 
-            /* // DEBUG getAdjustViewBounds default state (different pre-Jelly Bean)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                if (imageView.getAdjustViewBounds()) {
-                    Log.d(LOG_TAG, "android:adjustViewBounds is true");
-                } else {
-                    Log.d(LOG_TAG, "android:adjustViewBounds is false");
-                }
+            /*// DEBUG getAdjustViewBounds default state
+            if (imageView.getAdjustViewBounds()) {
+                Log.d(LOG_TAG, "android:adjustViewBounds is true");
+            } else {
+                Log.d(LOG_TAG, "android:adjustViewBounds is false");
             }*/
 
         } else {

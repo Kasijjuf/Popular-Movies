@@ -94,11 +94,8 @@ public class PosterGridFragment extends Fragment {
         /*// Might produce useful results now
         // DEBUG GridView attributes prior to assigning adapter
         Log.d(LOG_TAG, "GridView attributes prior to assigning adapter:");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            // Methods getColumnWidth() and getRequestedColumnWidth() require API 16 (Jelly Bean 4.1)
-            Log.d(LOG_TAG, "Actual column width is " + mGridView.getColumnWidth() + "dp");
-            Log.d(LOG_TAG, "Requested column width is " + mGridView.getRequestedColumnWidth() + "dp");
-        }*/
+        Log.d(LOG_TAG, "Actual column width is " + mGridView.getColumnWidth() + "dp");
+        Log.d(LOG_TAG, "Requested column width is " + mGridView.getRequestedColumnWidth() + "dp");*/
 
         int posterSort = PreferenceManager
                 .getDefaultSharedPreferences(getActivity())
@@ -116,8 +113,7 @@ public class PosterGridFragment extends Fragment {
 
         try {
             mMoviesJsonArray = new FetchSortedMoviesJsonTask().execute(posterSort).get();
-            mPosterAdapter = new ImageAdapter(getActivity(), //HMMM Verify getContext is correct method
-                    extractPosterUrlsFromJson());
+            mPosterAdapter = new ImageAdapter(getActivity(), extractPosterUrlsFromJson());
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
         }
@@ -127,17 +123,13 @@ public class PosterGridFragment extends Fragment {
         /*// Might produce useful results now
         // DEBUG GridView attributes after assigning adapter
         Log.d(LOG_TAG, "GridView attributes after assigning adapter:");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            // Methods getColumnWidth() and getRequestedColumnWidth() require API 16 (Jelly Bean 4.1)
-            Log.d(LOG_TAG, "Actual column width is " + mGridView.getColumnWidth() + "dp");
-            Log.d(LOG_TAG, "Requested column width is " + mGridView.getRequestedColumnWidth() + "dp");
-        }*/
+        Log.d(LOG_TAG, "Actual column width is " + mGridView.getColumnWidth() + "dp");
+        Log.d(LOG_TAG, "Requested column width is " + mGridView.getRequestedColumnWidth() + "dp");*/
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // FIXME Replace with real data
                 Intent intent = new Intent(getActivity(), MovieDetailActivity.class)
                         .putExtra(EXTRA_TITLE, extractTitleFromJson(position))
                         .putExtra(EXTRA_POSTER_URL, extractPosterUrlFromJson(position))
@@ -152,71 +144,8 @@ public class PosterGridFragment extends Fragment {
         return rootView;
     }
 
-    private String extractReleaseDateFromJson(int index) {
-        try {
-            return mMoviesJsonArray.getJSONObject(index).getString(TMDB_JSON_RELEASE_DATE);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String extractRatingFromJson(int index) {
-        try {
-            return mMoviesJsonArray.getJSONObject(index).getString(TMDB_JSON_RATING);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String extractSynopsisFromJson(int index) {
-        try {
-            return mMoviesJsonArray.getJSONObject(index).getString(TMDB_JSON_SYNOPSIS);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String extractBackdropUrlFromJson(int index) {
-        try {
-            return TMDB_BACKDROP_IMAGE_BASE_URL + mMoviesJsonArray.getJSONObject(index)
-                    .getString(TMDB_JSON_BACKDROP_PATH);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String extractPosterUrlFromJson(int index) {
-        try {
-            return TMDB_POSTER_IMAGE_BASE_URL + mMoviesJsonArray.getJSONObject(index)
-                    .getString(TMDB_JSON_POSTER_PATH);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String extractTitleFromJson(int index) {
-        try {
-            return mMoviesJsonArray.getJSONObject(index).getString(TMDB_JSON_TITLE);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.menu_poster_grid, menu);
     }
 
@@ -375,7 +304,7 @@ public class PosterGridFragment extends Fragment {
 
 
     // JSON Extraction Methods
-    String[] extractPosterUrlsFromJson() throws JSONException {
+    private String[] extractPosterUrlsFromJson() throws JSONException {
 
         String[] moviePosterUrls = new String[mMoviesJsonArray.length()];
 
@@ -385,5 +314,67 @@ public class PosterGridFragment extends Fragment {
                     .getJSONObject(i).getString(TMDB_JSON_POSTER_PATH);
         }
         return moviePosterUrls;
+    }
+
+    private String extractReleaseDateFromJson(int index) {
+        try {
+            return mMoviesJsonArray.getJSONObject(index).getString(TMDB_JSON_RELEASE_DATE);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String extractRatingFromJson(int index) {
+        try {
+            return mMoviesJsonArray.getJSONObject(index).getString(TMDB_JSON_RATING);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String extractSynopsisFromJson(int index) {
+        try {
+            return mMoviesJsonArray.getJSONObject(index).getString(TMDB_JSON_SYNOPSIS);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String extractBackdropUrlFromJson(int index) {
+        try {
+            return TMDB_BACKDROP_IMAGE_BASE_URL + mMoviesJsonArray.getJSONObject(index)
+                    .getString(TMDB_JSON_BACKDROP_PATH);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String extractPosterUrlFromJson(int index) {
+        try {
+            return TMDB_POSTER_IMAGE_BASE_URL + mMoviesJsonArray.getJSONObject(index)
+                    .getString(TMDB_JSON_POSTER_PATH);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String extractTitleFromJson(int index) {
+        try {
+            return mMoviesJsonArray.getJSONObject(index).getString(TMDB_JSON_TITLE);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            e.printStackTrace();
+            return null;
+        }
     }
 }

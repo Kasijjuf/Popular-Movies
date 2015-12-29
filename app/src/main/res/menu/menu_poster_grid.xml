@@ -4,7 +4,6 @@
 
     <!-- 50 is just a randomly selected number less than 100 -->
     <!-- TODO Use vector drawable for sort icon in API 21 and above -->
-    <!-- HMMM Should I have used ic_sort_black_24dp instead? -->
     <!-- HMMM Should the sort icon be mirrored for RTL languages? -->
     <item android:id="@+id/action_sort"
         android:title="@string/action_sort"
