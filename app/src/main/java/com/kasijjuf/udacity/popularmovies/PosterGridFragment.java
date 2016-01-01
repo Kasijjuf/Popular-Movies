@@ -97,28 +97,10 @@ public class PosterGridFragment extends Fragment {
         Log.d(LOG_TAG, "Actual column width is " + mGridView.getColumnWidth() + "dp");
         Log.d(LOG_TAG, "Requested column width is " + mGridView.getRequestedColumnWidth() + "dp");*/
 
-        int posterSort = PreferenceManager
+        updatePosterGrid(PreferenceManager
                 .getDefaultSharedPreferences(getActivity())
-                .getInt(getString(R.string.pref_poster_sort_key), SORT_NOT_YET_SELECTED); // HMMM Should this just default straight to SORT_BY_POPULARITY ?
-
-        // TODO Maybe do more here. For now just default to SORT_BY_POPULARITY
-        if (posterSort == SORT_NOT_YET_SELECTED) {
-            PreferenceManager.getDefaultSharedPreferences(getActivity())
-                    .edit()
-                    .putInt(getString(R.string.pref_poster_sort_key), SORT_BY_POPULARITY)
-                    .commit();
-
-            posterSort = SORT_BY_POPULARITY;
-        }
-
-        try {
-            mMoviesJsonArray = new FetchSortedMoviesJsonTask().execute(posterSort).get();
-            mPosterAdapter = new ImageAdapter(getActivity(), extractPosterUrlsFromJson());
-        } catch (InterruptedException | ExecutionException | JSONException e) {
-            e.printStackTrace();
-        }
-
-        mGridView.setAdapter(mPosterAdapter);
+                .getInt(getString(R.string.pref_poster_sort_key), SORT_NOT_YET_SELECTED)
+        );
 
         /*// Might produce useful results now
         // DEBUG GridView attributes after assigning adapter
@@ -150,7 +132,7 @@ public class PosterGridFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { // HMMM Am I logging the sort order in duplicate locations?
 
         // TODO Implement a check to see if selection is already the current setting
 
@@ -162,7 +144,7 @@ public class PosterGridFragment extends Fragment {
                         .putInt(getString(R.string.pref_poster_sort_key), SORT_BY_POPULARITY)
                         .commit();
 
-                updatePosterGrid();
+                updatePosterGrid(SORT_BY_POPULARITY);
 
                 return true;
 
@@ -173,7 +155,7 @@ public class PosterGridFragment extends Fragment {
                         .putInt(getString(R.string.pref_poster_sort_key), SORT_BY_RATING)
                         .commit();
 
-                updatePosterGrid();
+                updatePosterGrid(SORT_BY_RATING);
 
                 return true;
 
@@ -182,10 +164,17 @@ public class PosterGridFragment extends Fragment {
         }
     }
 
-    private void updatePosterGrid() {
-        int posterSort = PreferenceManager
-                .getDefaultSharedPreferences(getActivity())
-                .getInt(getString(R.string.pref_poster_sort_key), SORT_NOT_YET_SELECTED); // FIXME Add a sort param to the updatePosterGrid method
+    private void updatePosterGrid(int posterSort) {
+
+        // TODO Maybe do more here. For now just default to SORT_BY_POPULARITY
+        if (posterSort == SORT_NOT_YET_SELECTED) {
+            PreferenceManager.getDefaultSharedPreferences(getActivity())
+                    .edit()
+                    .putInt(getString(R.string.pref_poster_sort_key), SORT_BY_POPULARITY)
+                    .commit();
+
+            posterSort = SORT_BY_POPULARITY;
+        }
 
         try {
             mMoviesJsonArray = new FetchSortedMoviesJsonTask().execute(posterSort).get();
