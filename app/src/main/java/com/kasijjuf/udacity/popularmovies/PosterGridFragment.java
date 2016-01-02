@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
 public class PosterGridFragment extends Fragment {
 
@@ -176,14 +175,7 @@ public class PosterGridFragment extends Fragment {
             posterSort = SORT_BY_POPULARITY;
         }
 
-        try {
-            mMoviesJsonArray = new FetchSortedMoviesJsonTask().execute(posterSort).get();
-            mPosterAdapter = new ImageAdapter(getActivity(), extractPosterUrlsFromJson());
-        } catch (InterruptedException | ExecutionException | JSONException e) {
-            e.printStackTrace();
-        }
-
-        mGridView.setAdapter(mPosterAdapter);
+        new FetchSortedMoviesJsonTask().execute(posterSort);
     }
 
 
@@ -288,6 +280,18 @@ public class PosterGridFragment extends Fragment {
 
             return null;
         }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            try {
+                mMoviesJsonArray = jsonArray;
+                mPosterAdapter = new ImageAdapter(getActivity(), extractPosterUrlsFromJson());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            mGridView.setAdapter(mPosterAdapter);
+        }
     }
 
 
@@ -300,7 +304,8 @@ public class PosterGridFragment extends Fragment {
         for (int i = 0; i < mMoviesJsonArray.length(); i++) {
 
             moviePosterUrls[i] = TMDB_POSTER_IMAGE_BASE_URL + mMoviesJsonArray
-                    .getJSONObject(i).getString(TMDB_JSON_POSTER_PATH);
+                    .getJSONObject(i) // HMMM How can getJSONObject(i) throw an exception?
+                    .getString(TMDB_JSON_POSTER_PATH);
         }
         return moviePosterUrls;
     }
