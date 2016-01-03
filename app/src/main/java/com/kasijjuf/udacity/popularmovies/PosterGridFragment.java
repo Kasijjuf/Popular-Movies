@@ -283,14 +283,16 @@ public class PosterGridFragment extends Fragment {
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            try {
-                mMoviesJsonArray = jsonArray;
-                mPosterAdapter = new ImageAdapter(getActivity(), extractPosterUrlsFromJson());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            if (jsonArray != null) {
+                try {
+                    mMoviesJsonArray = jsonArray;
+                    mPosterAdapter = new ImageAdapter(getActivity(), extractPosterUrlsFromJson());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-            mGridView.setAdapter(mPosterAdapter);
+                mGridView.setAdapter(mPosterAdapter);
+            }
         }
     }
 
