@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
-            Intent intent = new Intent(this, AboutActivity.class);
+            Intent intent = new Intent(this, AboutAppActivity.class);
             startActivity(intent);
             return true;
         }

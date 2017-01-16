@@ -29,7 +29,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.kasijjuf.udacity.popularmovies.MainActivity" />
         </activity>
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AboutAppActivity"></activity>
     </application>
 
 </manifest>

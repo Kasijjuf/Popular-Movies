@@ -6,12 +6,12 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutAppActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_app_about);
 
         ImageView imageView = (ImageView) findViewById(R.id.image_tmdb_logo);
         Picasso.with(this).load(R.drawable.tmdb_logo).into(imageView);
