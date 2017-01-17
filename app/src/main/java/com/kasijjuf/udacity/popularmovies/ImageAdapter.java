@@ -29,7 +29,7 @@ class ImageAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {  // HMMM Do I need to implement this method?
+    public Object getItem(int position) {
         return mImageURLs[position];
     }
 
@@ -40,14 +40,11 @@ class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        //TODO Maybe rework this method to not declare the imageView
         ImageView imageView;
 
         if (convertView == null) {
             imageView = new ImageView(mContext);
 
-            //TODO initialize other ImageView attributes here as necessary
             imageView.setPadding(0, 0, 0, 0);
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE); // HMMM Which ScaleType do I need?

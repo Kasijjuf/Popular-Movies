@@ -90,22 +90,10 @@ public class PosterGridFragment extends Fragment {
 
         mGridView = (GridView) rootView.findViewById(R.id.gridview_movies);
 
-        /*// Might produce useful results now
-        // DEBUG GridView attributes prior to assigning adapter
-        Log.d(LOG_TAG, "GridView attributes prior to assigning adapter:");
-        Log.d(LOG_TAG, "Actual column width is " + mGridView.getColumnWidth() + "dp");
-        Log.d(LOG_TAG, "Requested column width is " + mGridView.getRequestedColumnWidth() + "dp");*/
-
         updatePosterGrid(PreferenceManager
                 .getDefaultSharedPreferences(getActivity())
                 .getInt(getString(R.string.pref_poster_sort_key), SORT_NOT_YET_SELECTED)
         );
-
-        /*// Might produce useful results now
-        // DEBUG GridView attributes after assigning adapter
-        Log.d(LOG_TAG, "GridView attributes after assigning adapter:");
-        Log.d(LOG_TAG, "Actual column width is " + mGridView.getColumnWidth() + "dp");
-        Log.d(LOG_TAG, "Requested column width is " + mGridView.getRequestedColumnWidth() + "dp");*/
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -131,7 +119,7 @@ public class PosterGridFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { // HMMM Am I logging the sort order in duplicate locations?
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         // TODO Implement a check to see if selection is already the current setting
 
@@ -217,7 +205,7 @@ public class PosterGridFragment extends Fragment {
                         break;
 
                     default:
-                        // TODO Write some sort of "This should never happen" Toast
+                        // This should never happen
                 }
 
                 Uri builtUri = uriBuilder.appendQueryParameter(TMDB_API_KEY_PARAM, TMDB_API_KEY)
@@ -265,7 +253,7 @@ public class PosterGridFragment extends Fragment {
                 if (reader != null) {
                     try {
                         reader.close();
-                    } catch (final IOException e) { // HMMM Why is this final?
+                    } catch (final IOException e) {
                         Log.e(LOG_TAG, "Error closing stream", e);
                     }
                 }
@@ -306,7 +294,7 @@ public class PosterGridFragment extends Fragment {
         for (int i = 0; i < mMoviesJsonArray.length(); i++) {
 
             moviePosterUrls[i] = TMDB_POSTER_IMAGE_BASE_URL + mMoviesJsonArray
-                    .getJSONObject(i) // HMMM How can getJSONObject(i) throw an exception?
+                    .getJSONObject(i)
                     .getString(TMDB_JSON_POSTER_PATH);
         }
         return moviePosterUrls;
