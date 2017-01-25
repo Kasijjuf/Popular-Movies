@@ -129,7 +129,7 @@ public class PosterGridFragment extends Fragment {
                 PreferenceManager.getDefaultSharedPreferences(getActivity())
                         .edit()
                         .putInt(getString(R.string.pref_poster_sort_key), SORT_BY_POPULARITY)
-                        .commit();
+                        .apply();
 
                 updatePosterGrid(SORT_BY_POPULARITY);
 
@@ -140,7 +140,7 @@ public class PosterGridFragment extends Fragment {
                 PreferenceManager.getDefaultSharedPreferences(getActivity())
                         .edit()
                         .putInt(getString(R.string.pref_poster_sort_key), SORT_BY_RATING)
-                        .commit();
+                        .apply();
 
                 updatePosterGrid(SORT_BY_RATING);
 
@@ -158,7 +158,7 @@ public class PosterGridFragment extends Fragment {
             PreferenceManager.getDefaultSharedPreferences(getActivity())
                     .edit()
                     .putInt(getString(R.string.pref_poster_sort_key), SORT_BY_POPULARITY)
-                    .commit();
+                    .apply();
 
             posterSort = SORT_BY_POPULARITY;
         }
